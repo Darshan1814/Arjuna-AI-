@@ -120,8 +120,8 @@ export default function ProgressTracker() {
   const currentProgress = selectedSection ? progress[selectedSection] : null;
 
   return (
-    <div className="h-screen bg-gradient-to-br from-indigo-50 to-purple-100 p-4 sm:p-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto h-full flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 -m-4 lg:-m-6">
+      <div className="max-w-6xl mx-auto p-4 sm:p-6">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-indigo-900 mb-2">
@@ -134,7 +134,7 @@ export default function ProgressTracker() {
 
         {!selectedSection ? (
           /* Section Selection Grid */
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
             {sections.map((section) => (
               <div 
                 key={section.key} 
@@ -162,7 +162,7 @@ export default function ProgressTracker() {
           </div>
         ) : (
           /* Selected Section Tasks */
-          <div className="flex-1 flex flex-col">
+          <div className="mb-6">
             <div className="flex items-center gap-4 mb-6">
               <button 
                 onClick={() => setSelectedSection(null)}
@@ -172,7 +172,7 @@ export default function ProgressTracker() {
               </button>
             </div>
             
-            <div className="bg-white rounded-2xl p-6 shadow-lg flex-1">
+            <div className="bg-white rounded-2xl p-6 shadow-lg">
               <div className="flex items-center gap-4 mb-6">
                 <div className={`w-12 h-12 bg-gradient-to-r ${currentSection.color} rounded-xl flex items-center justify-center text-white`}>
                   {currentSection.icon}
@@ -198,7 +198,7 @@ export default function ProgressTracker() {
                 ></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2">
                 {tasks[selectedSection].map((task) => (
                   <div 
                     key={task.id} 
@@ -236,8 +236,6 @@ export default function ProgressTracker() {
             </div>
           </div>
         )}
-
-
       </div>
     </div>
   );

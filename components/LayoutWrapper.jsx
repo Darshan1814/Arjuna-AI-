@@ -19,9 +19,11 @@ export default function LayoutWrapper({ children }) {
     <div className="flex min-h-screen bg-gray-50 text-gray-900">
       {showSidebar && <ModernSidebar />}
       
-      <div className="flex-1 flex flex-col min-h-screen">
-        <main className="flex-1 bg-gradient-to-br from-slate-50 to-blue-50">
-          {children}
+      <div className={`flex-1 flex flex-col min-h-screen ${showSidebar ? 'lg:ml-0 ml-0' : ''}`}>
+        <main className={`flex-1 bg-gradient-to-br from-slate-50 to-blue-50 ${showSidebar ? 'lg:pl-0 pl-0' : ''}`}>
+          <div className="p-4 lg:p-6">
+            {children}
+          </div>
         </main>
         
         {!hideLayout && (

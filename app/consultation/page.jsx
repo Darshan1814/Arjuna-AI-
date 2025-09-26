@@ -223,37 +223,34 @@ export default function ConsultationPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 relative">
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 relative -m-4 lg:-m-6">
       <div className="relative z-10">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-
-          <div className="flex justify-between items-center py-3 sm:py-4">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <img src="/yantra.png" alt="Yantra" className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover" />
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-3 sm:py-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+                  <img src="/yantra.png" alt="Yantra" className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover" />
+                </div>
+                <div>
+                  <h1 className="text-lg sm:text-xl font-bold text-gray-900">Yantra</h1>
+                  <p className="text-xs sm:text-sm text-gray-600">DBT & Banking Assistant</p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold text-gray-900">Yantra</h1>
-                <p className="text-xs sm:text-sm text-gray-600">DBT & Banking Assistant</p>
+              <div className="flex items-center space-x-2">
+                {isConnected && (
+                  <span className="text-xs sm:text-sm text-green-600 hidden sm:block">
+                    Voice Active
+                  </span>
+                )}
+                <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${isConnected ? 'bg-green-500' : 'bg-gray-400'}`}></div>
               </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              {isConnected && (
-                <span className="text-xs sm:text-sm text-green-600 hidden sm:block">
-                  Voice Active
-                </span>
-              )}
-              <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${isConnected ? 'bg-green-500' : 'bg-gray-400'}`}></div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-[calc(100vh-160px)] sm:h-[calc(100vh-240px)]">
           
           {/* Sidebar - Hidden on mobile */}
@@ -385,8 +382,7 @@ export default function ConsultationPage() {
             </div>
           </div>
         </div>
-
-      </div>
+        </div>
       </div>
     </div>
   );
