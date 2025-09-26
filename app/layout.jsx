@@ -4,6 +4,7 @@ import "./globals.css";
 import SessionWrapper from "../components/SessionWrapper";
 import LayoutWrapper from "../components/LayoutWrapper";
 import FloatingYantra from "../components/FloatingYantra";
+import KeepAliveClient from "../components/KeepAliveClient";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         </LayoutWrapper>
         </SessionWrapper>
         <FloatingYantra />
+        <KeepAliveClient />
         <Analytics />
       </body>
     </html>

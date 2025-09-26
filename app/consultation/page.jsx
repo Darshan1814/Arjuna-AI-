@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Vapi from '@vapi-ai/web';
 import { Mic, MicOff, Send, BookOpen, ExternalLink } from 'lucide-react';
-import { vapiConfig } from '../lib/vapiConfig';
+import { vapiConfig } from '../../lib/vapiConfig';
 
 export default function ConsultationPage() {
   const [isConnected, setIsConnected] = useState(false);
