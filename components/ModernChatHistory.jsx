@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { 
   MessageSquare, 
   Calendar, 
@@ -19,6 +20,7 @@ import {
 
 export default function ModernChatHistory() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [chatSessions, setChatSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -181,7 +183,7 @@ export default function ModernChatHistory() {
             </p>
             {!searchTerm && (
               <button
-                onClick={() => window.location.href = "/dashboard/mental-counselor"}
+                onClick={() => router.push("/dashboard/mental-counselor")}
                 className="btn-primary"
               >
                 Start Your First Chat

@@ -347,7 +347,7 @@ export default function ConsultationPage() {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && sendTextMessage()}
-                    placeholder={window.innerWidth < 640 ? "Ask about DBT..." : "Ask about DBT accounts..."}
+                    placeholder="Ask about DBT accounts..."
                     className="flex-1 border border-gray-300 rounded-lg px-2 sm:px-3 md:px-4 py-2 text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     disabled={isProcessing}
                   />
@@ -364,7 +364,7 @@ export default function ConsultationPage() {
                 <div className="mt-2 text-xs text-gray-500 text-center px-2">
                   {isConnecting ? 'Connecting...' : 
                    isConnected ? 'Connected - Speak now' : 
-                   window.innerWidth < 640 ? 'Tap Yantra for voice' : 'Click Yantra to start voice chat'}
+                   'Click Yantra to start voice chat'}
                 </div>
               </div>
               </div>

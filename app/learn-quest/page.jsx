@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Trophy, Star, Target, Award, BookOpen, CheckCircle, X, Lightbulb, Users, Gamepad2, Brain, Zap, Send, MessageCircle } from "lucide-react";
 
 export default function LearnQuest() {
+  const router = useRouter();
   const [userStats, setUserStats] = useState({ points: 0, level: 1, badges: 0, dbtReady: 0 });
   const [userBadges, setUserBadges] = useState([]);
   const [showCongrats, setShowCongrats] = useState(false);
@@ -239,7 +241,7 @@ export default function LearnQuest() {
           <MessageCircle className="w-6 h-6" /> Game with Yantra
         </h2>
         <div className="mb-6">
-          <div className="p-4 border-2 border-indigo-200 bg-indigo-50 rounded-xl cursor-pointer hover:shadow-md transition-all" onClick={() => window.open('/game-with-yantra', '_blank')}>
+          <div className="p-4 border-2 border-indigo-200 bg-indigo-50 rounded-xl cursor-pointer hover:shadow-md transition-all" onClick={() => router.push('/game-with-yantra')}>
             <div className="flex items-center gap-3 mb-2">
               <img src="/yantra.png" alt="Yantra" className="w-8 h-8 rounded-full" />
               <h3 className="font-semibold text-gray-900">🎯 Interactive Challenge</h3>

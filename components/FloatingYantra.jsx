@@ -16,11 +16,13 @@ export default function FloatingYantra() {
 
   useEffect(() => {
     // Initialize position based on screen size
-    const isMobile = window.innerWidth < 768;
-    setPosition({ 
-      x: window.innerWidth - (isMobile ? 80 : 100), 
-      y: window.innerHeight - (isMobile ? 80 : 100)
-    });
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768;
+      setPosition({ 
+        x: window.innerWidth - (isMobile ? 80 : 100), 
+        y: window.innerHeight - (isMobile ? 80 : 100)
+      });
+    }
 
     // Initialize Vapi like consultation page
     const initializeVapi = async () => {
@@ -40,18 +42,22 @@ export default function FloatingYantra() {
     initializeVapi();
 
     const handleResize = () => {
-      const isMobile = window.innerWidth < 768;
-      const offset = isMobile ? 60 : 80;
-      setPosition(prev => ({
-        x: Math.min(prev.x, window.innerWidth - offset),
-        y: Math.min(prev.y, window.innerHeight - offset)
-      }));
+      if (typeof window !== 'undefined') {
+        const isMobile = window.innerWidth < 768;
+        const offset = isMobile ? 60 : 80;
+        setPosition(prev => ({
+          x: Math.min(prev.x, window.innerWidth - offset),
+          y: Math.min(prev.y, window.innerHeight - offset)
+        }));
+      }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   const handleMouseDown = (e) => {
@@ -63,7 +69,7 @@ export default function FloatingYantra() {
   };
 
   const handleMouseMove = (e) => {
-    if (isDragging) {
+    if (isDragging && typeof window !== 'undefined') {
       const isMobile = window.innerWidth < 768;
       const offset = isMobile ? 60 : 80;
       setPosition({
@@ -88,8 +94,9 @@ export default function FloatingYantra() {
     }
   }, [isDragging, dragOffset]);
 
+  const pathname = usePathname();
+  
   const startVoiceChat = async () => {
-    const pathname = window.location.pathname;
     const assistantId = pathname === '/game-with-yantra' 
       ? '61ee6ff1-52e2-41e6-82d5-dfdcf0ed7a25' // Game assistant
       : '61ee6ff1-52e2-41e6-82d5-dfdcf0ed7a25'; // Same for now
