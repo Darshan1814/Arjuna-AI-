@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Mic, MicOff } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Vapi from '@vapi-ai/web';
+import { vapiConfig } from '../lib/vapiConfig';
 
 export default function FloatingYantra() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -27,13 +28,18 @@ export default function FloatingYantra() {
     // Initialize Vapi like consultation page
     const initializeVapi = async () => {
       try {
-        const publicKey = '40e7ab26-af43-4e5f-a7e3-6db1e781bdc9';
-        if (!publicKey) {
+        if (!vapiConfig.isConfigured()) {
           console.warn('Vapi not configured - voice features disabled');
           return;
         }
 
-        setVapi(new Vapi(publicKey));
+        const vapiInstance = new Vapi(vapiConfig.publicKey);
+        vapiInstance.on('error', (error) => {
+          console.error('Vapi error:', error);
+          setIsConnecting(false);
+          setIsListening(false);
+        });
+        setVapi(vapiInstance);
       } catch (error) {
         console.error('Vapi initialization failed:', error);
       }
@@ -97,12 +103,8 @@ export default function FloatingYantra() {
   const pathname = usePathname();
   
   const startVoiceChat = async () => {
-    const assistantId = pathname === '/game-with-yantra' 
-      ? '61ee6ff1-52e2-41e6-82d5-dfdcf0ed7a25' // Game assistant
-      : '61ee6ff1-52e2-41e6-82d5-dfdcf0ed7a25'; // Same for now
-    
-    if (!vapi) {
-      console.warn('Vapi not initialized');
+    if (!vapi || !vapiConfig.isConfigured()) {
+      console.warn('Vapi not configured - voice features disabled');
       return;
     }
 
@@ -126,7 +128,7 @@ export default function FloatingYantra() {
           setIsListening(false);
         });
         
-        await vapi.start(assistantId);
+        await vapi.start(vapiConfig.assistantId);
       }
     } catch (error) {
       console.error('Vapi call failed:', error);

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Vapi from '@vapi-ai/web';
 import { Mic, MicOff, Send, BookOpen, ExternalLink } from 'lucide-react';
+import { vapiConfig } from '../lib/vapiConfig';
 
 export default function ConsultationPage() {
   const [isConnected, setIsConnected] = useState(false);
@@ -35,13 +36,19 @@ export default function ConsultationPage() {
 
   const initializeVapi = async () => {
     try {
-      const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY;
-      if (!publicKey) {
+      if (!vapiConfig.isConfigured()) {
         console.warn('Vapi not configured - voice features disabled');
         return;
       }
 
-      vapiRef.current = new Vapi(publicKey);
+      vapiRef.current = new Vapi(vapiConfig.publicKey);
+      
+      vapiRef.current.on('error', (error) => {
+        console.error('Vapi error:', error);
+        setIsConnecting(false);
+        setIsConnected(false);
+        setIsListening(false);
+      });
       
       vapiRef.current.on('call-start', () => {
         setIsConnecting(false);
@@ -90,17 +97,24 @@ export default function ConsultationPage() {
 
   const startVoiceChat = async () => {
     try {
-      const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
-      if (!assistantId || !vapiRef.current) {
+      if (!vapiConfig.isConfigured() || !vapiRef.current) {
         console.warn('Vapi not configured - voice chat disabled');
+        setChatMessages(prev => [...prev, {
+          role: 'assistant',
+          content: 'Voice chat is currently unavailable. Please use text chat instead.'
+        }]);
         return;
       }
       
       setIsConnecting(true);
-      await vapiRef.current.start(assistantId);
+      await vapiRef.current.start(vapiConfig.assistantId);
     } catch (error) {
       console.error('Failed to start voice chat:', error);
       setIsConnecting(false);
+      setChatMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'Unable to start voice chat. Please try again or use text chat.'
+      }]);
     }
   };
 
