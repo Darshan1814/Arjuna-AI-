@@ -9,9 +9,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_VAPI_PUBLIC_KEY
-        sync: false
+        value: 40e7ab26-af43-4e5f-a7e3-6db1e781bdc9
       - key: NEXT_PUBLIC_VAPI_ASSISTANT_ID
-        sync: false
+        value: 61ee6ff1-52e2-41e6-82d5-dfdcf0ed7a25
       - key: VAPI_PRIVATE_KEY
         sync: false
       - key: GEMINI_API_KEY
