@@ -10,8 +10,10 @@ services:
         value: production
       - key: NEXT_PUBLIC_VAPI_PUBLIC_KEY
         value: 40e7ab26-af43-4e5f-a7e3-6db1e781bdc9
-      - key: NEXT_PUBLIC_VAPI_ASSISTANT_ID
-        value: 61ee6ff1-52e2-41e6-82d5-dfdcf0ed7a25
+      - key: NEXT_PUBLIC_VAPI_ASSISTANT_ID_PRIMARY
+        sync: false
+      - key: NEXT_PUBLIC_VAPI_ASSISTANT_ID_SECONDARY
+        sync: false
       - key: VAPI_PRIVATE_KEY
         sync: false
       - key: GEMINI_API_KEY
