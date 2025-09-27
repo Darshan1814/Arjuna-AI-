@@ -1,3 +1,9 @@
 export async function GET() {
-  return Response.json({ status: 'alive', timestamp: new Date().toISOString() });
+  const timestamp = new Date().toISOString();
+  console.log('🟢 Keep-alive ping received at:', timestamp);
+  return Response.json({ 
+    status: 'alive', 
+    timestamp,
+    message: 'Server is awake and running!' 
+  });
 }

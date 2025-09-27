@@ -8,6 +8,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NEXT_PUBLIC_RENDER_EXTERNAL_URL
+        value: https://arjuna-ai.onrender.com
       - key: NEXT_PUBLIC_VAPI_PUBLIC_KEY
         value: 40e7ab26-af43-4e5f-a7e3-6db1e781bdc9
       - key: NEXT_PUBLIC_VAPI_ASSISTANT_ID_PRIMARY
