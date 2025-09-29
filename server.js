@@ -109,6 +109,20 @@ app.prepare().then(() => {
     });
   });
 
+  // Server-side keep-alive for Render
+  if (process.env.NODE_ENV === 'production') {
+    const keepAliveInterval = setInterval(() => {
+      const timestamp = new Date().toISOString();
+      console.log(`🔄 Server keep-alive heartbeat: ${timestamp}`);
+      // Perform minimal operation to keep server active
+      process.memoryUsage();
+    }, 10 * 60 * 1000); // Every 10 minutes
+    
+    process.on('SIGTERM', () => {
+      clearInterval(keepAliveInterval);
+    });
+  }
+
   httpServer
     .once('error', (err) => {
       console.error(err);
@@ -116,5 +130,8 @@ app.prepare().then(() => {
     })
     .listen(port, hostname, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
+      if (process.env.NODE_ENV === 'production') {
+        console.log('🚀 Server-side keep-alive activated for Render deployment');
+      }
     });
 });
