@@ -2,6 +2,7 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 const { Server } = require('socket.io');
+const serverKeepAlive = require('./lib/serverKeepAlive');
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = dev ? 'localhost' : '0.0.0.0';
@@ -111,15 +112,15 @@ app.prepare().then(() => {
 
   // Server-side keep-alive for Render
   if (process.env.NODE_ENV === 'production') {
-    const keepAliveInterval = setInterval(() => {
-      const timestamp = new Date().toISOString();
-      console.log(`🔄 Server keep-alive heartbeat: ${timestamp}`);
-      // Perform minimal operation to keep server active
-      process.memoryUsage();
-    }, 10 * 60 * 1000); // Every 10 minutes
+    serverKeepAlive.start();
     
     process.on('SIGTERM', () => {
-      clearInterval(keepAliveInterval);
+      serverKeepAlive.stop();
+    });
+    
+    process.on('SIGINT', () => {
+      serverKeepAlive.stop();
+      process.exit(0);
     });
   }
 
@@ -131,7 +132,7 @@ app.prepare().then(() => {
     .listen(port, hostname, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
       if (process.env.NODE_ENV === 'production') {
-        console.log('🚀 Server-side keep-alive activated for Render deployment');
+        console.log('🚀 Enhanced server-side keep-alive activated for Render deployment');
       }
     });
 });
