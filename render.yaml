@@ -9,7 +9,7 @@ services:
   - type: cron
     name: keep-alive-cron
     env: node
-    schedule: "*/5 * * * *"
+    schedule: "* * * * *"
     buildCommand: npm install
     startCommand: node cron-job.js
     envVars:

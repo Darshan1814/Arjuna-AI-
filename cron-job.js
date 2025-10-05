@@ -17,6 +17,6 @@ function pingServer() {
   });
 }
 
-// Run immediately and every 10 minutes
+// Run immediately and every 30 seconds
 pingServer();
-setInterval(pingServer, 10 * 60 * 1000);
+setInterval(pingServer, 30 * 1000);
